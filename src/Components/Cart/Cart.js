@@ -3,22 +3,27 @@ import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
 
-const Cart = () => {
+const Cart = (props) => {
     const totalAmount = `$00.00`;
 
     const cartItems = <CartItem />;
 
+    const orderHandler = () => {
+        console.log('Ordering...');
+        props.onHideCart();
+    };
+
     return (
         <Fragment>
-            <Modal>
+            <Modal onHideCart={props.onHideCart}>
                 {cartItems}
                 <div className={classes.total}>
                     <span>Total Amount:</span>
                     <span>{totalAmount}</span>
                 </div>
                 <div className={classes.actions}>
-                    <button className={classes['button--alt']}>Cancel</button>
-                    <button className={classes.button}>Order</button>
+                    <button className={classes['button--alt']} onClick={props.onHideCart} >Cancel</button>
+                    <button className={classes.button} onClick={orderHandler} >Order</button>
                 </div>
             </Modal>
         </Fragment>
