@@ -1,12 +1,21 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import Modal from '../UI/Modal';
 import CartItem from './CartItem';
 import classes from './Cart.module.css';
+import CartContext from '../../Store/cart-context';
 
 const Cart = (props) => {
-    const totalAmount = `$00.00`;
+    const cartCtx = useContext(CartContext);
+    let amount = 0;
+    for (let i = 0; i < cartCtx.items.length; i++) {
+        amount += +cartCtx.items[i].amount * +cartCtx.items[i].price
+    }
 
-    const cartItems = <CartItem />;
+    const totalAmount = `$${amount.toFixed(2)}`;
+
+    const cartItems = cartCtx.items.map((item) => {
+        return <CartItem key={item.id} name={item.name} price={item.price} amount={item.amount} />
+    });
 
     const orderHandler = () => {
         console.log('Ordering...');
