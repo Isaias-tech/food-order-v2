@@ -2,8 +2,17 @@ import React from 'react';
 import classes from './CartItem.module.css';
 
 const CartItem = (props) => {
-    const price = `$${props.price.toFixed(2)}`
+    const price = `$${props.price.toFixed(2)}`;
 
+    const addItemHandler = () => {
+        const item = { amount: props.amount, name: props.name, price: props.price, id: props.id, amountItem: true };
+        props.addItem(item);
+    };
+
+    const removeItemHandler = () => {
+        props.removeItem(props.id)  
+    };
+    
     return (
         <li className={classes['cart-item']}>
             <div>
@@ -14,8 +23,8 @@ const CartItem = (props) => {
                 </div>
             </div>
             <div className={classes.actions}>
-                <button /* onClick={props.onRemove} */>−</button>
-                <button onClick={props.addItem}>+</button>
+                <button onClick={removeItemHandler}>−</button>
+                <button onClick={addItemHandler}>+</button>
             </div>
         </li>
     );

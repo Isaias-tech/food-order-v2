@@ -6,21 +6,29 @@ import CartContext from '../../Store/cart-context';
 
 const Cart = (props) => {
     const cartCtx = useContext(CartContext);
+
     let amount = 0;
-    for (let i = 0; i < cartCtx.items.length; i++) {
-        amount += +cartCtx.items[i].amount * +cartCtx.items[i].price
-    }
+
+    cartCtx.items.forEach(item => {
+        amount += +item.amount * +item.price
+    });
 
     const totalAmount = `$${amount.toFixed(2)}`;
 
-    const cartItems = cartCtx.items.map((item) => {
-        return <CartItem key={item.id} name={item.name} price={item.price} amount={item.amount} />
-    });
+    const cartItems = <ul className={classes['cart-items']}>
+        {cartCtx.items.map((item) => {
+            return (
+                <CartItem key={item.id} id={item.id} name={item.name} price={item.price} amount={item.amount} removeItem={cartCtx.removeItem} addItem={cartCtx.addItem} />
+            )
+        })}
+    </ul>
 
     const orderHandler = () => {
         console.log('Ordering...');
         props.onHideCart();
     };
+
+    console.log(cartCtx.items.length)
 
     return (
         <Fragment>
@@ -32,11 +40,11 @@ const Cart = (props) => {
                 </div>
                 <div className={classes.actions}>
                     <button className={classes['button--alt']} onClick={props.onHideCart} >Cancel</button>
-                    <button className={classes.button} onClick={orderHandler} >Order</button>
+                    {cartCtx.items.length > 0 && <button className={classes.button} onClick={orderHandler} >Order</button>}
                 </div>
             </Modal>
         </Fragment>
     );
-}
+};
 
 export default Cart;

@@ -14,7 +14,8 @@ const MealItemForm = (props) => {
             id: props.id,
             name: props.item.name,
             price: props.item.price,
-            amount: inputRef.current.value
+            amount: inputRef.current.value,
+            amountItem: false 
         };
         cartCtx.addItem(item);
     };
