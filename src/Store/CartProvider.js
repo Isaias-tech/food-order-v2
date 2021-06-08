@@ -19,13 +19,11 @@ const cartReducer = (state, action) => {
                 newAmount = +existingItem.amount + +action.item.amount;
             }
             let newItem = { ...existingItem, amount: newAmount };
-            console.log(newItem)
             items = [...state.items];
             items[existingItemIndex] = newItem;
         } else {
             items = state.items.concat(action.item);
         }
-        console.log(items)
         return {
             items: [...items],
             totalAmount: 0

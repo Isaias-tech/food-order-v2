@@ -28,8 +28,6 @@ const Cart = (props) => {
         props.onHideCart();
     };
 
-    console.log(cartCtx.items.length)
-
     return (
         <Fragment>
             <Modal onHideCart={props.onHideCart}>
